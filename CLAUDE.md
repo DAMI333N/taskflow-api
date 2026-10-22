@@ -43,3 +43,17 @@ the cost of the brief's literal requirements.
 ## Logging
 - Append every real error (command, exact message, cause, fix) to BUILD-LOG.md (excluded via
   .git/info/exclude). It feeds the README Errors and failures section.
+
+## Agent skills
+
+### Issue tracker
+
+GitHub Issues on DAMI333N/taskflow-api, via `gh`. See `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Default five labels (needs-triage, needs-info, ready-for-agent, ready-for-human, wontfix). See `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: root `GLOSSARY.md` + `docs/adr/`, created lazily. See `docs/agents/domain.md`.
