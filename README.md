@@ -59,7 +59,7 @@ Other commands:
 
 ```bash
 mvn test                  # 39 unit, web-layer and integration tests
-mvn clean package         # build target/taskflow-api-0.0.1-SNAPSHOT.jar
+mvn clean package         # build target/taskflow-api-1.0.0.jar
 ```
 
 A Postman collection covering every endpoint is in
