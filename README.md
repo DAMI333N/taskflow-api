@@ -182,3 +182,15 @@ this API needs no change to its data model:
 Drag-and-drop ordering stays a frontend concern; the API returns tasks in
 creation order.
 
+## CI pipeline (Option 1)
+
+GitHub Actions runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml) on
+every push. The test job runs `./mvnw -B verify` on Temurin 21. On `main` only,
+a second job builds the image from the Dockerfile and pushes it to Docker Hub
+tagged `main` and `sha-<short commit>`. Docker Hub credentials are the
+`DOCKER_USERNAME` and `DOCKER_TOKEN` repository secrets, never in the code.
+
+- Successful pipeline run: [run 39737766680](https://github.com/DAMI333N/taskflow-api/actions/runs/39737766680)
+  (39 tests, image pushed as `main` and `sha-0a2cfc7`)
+- Image on Docker Hub: [dami333n/taskflow-api](https://hub.docker.com/r/dami333n/taskflow-api)
+
