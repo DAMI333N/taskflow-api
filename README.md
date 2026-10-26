@@ -185,12 +185,54 @@ creation order.
 ## CI pipeline (Option 1)
 
 GitHub Actions runs [`.github/workflows/ci.yml`](.github/workflows/ci.yml) on
-every push. The test job runs `./mvnw -B verify` on Temurin 21. On `main` only,
-a second job builds the image from the Dockerfile and pushes it to Docker Hub
-tagged `main` and `sha-<short commit>`. Docker Hub credentials are the
+every push to a branch and every `v*.*.*` tag. The test job runs
+`./mvnw -B verify` on Temurin 21. On `main` and on version tags, once the test and
+security jobs pass, a final job builds the image from the Dockerfile and pushes it to Docker Hub with the tags
+described in [Versioned images](#versioned-images-option-4). Docker Hub credentials are the
 `DOCKER_USERNAME` and `DOCKER_TOKEN` repository secrets, never in the code.
 
 - Successful pipeline run: [run 39737766680](https://github.com/DAMI333N/taskflow-api/actions/runs/39737766680)
   (39 tests, image pushed as `main` and `sha-0a2cfc7`)
 - Image on Docker Hub: [dami333n/taskflow-api](https://hub.docker.com/r/dami333n/taskflow-api)
+
+## Versioned images (Option 4)
+
+Images carry two kinds of tag: a Semantic Version (MAJOR.MINOR.PATCH) for
+releases, and the Git commit SHA for every build of `main`. CI applies both
+automatically through `docker/metadata-action`; nothing is tagged by hand.
+
+| Trigger | Image tags | Example |
+|---|---|---|
+| Push to `main` | `main`, `sha-<7-char commit>` | `main`, `sha-723d99e` |
+| Push of tag `vX.Y.Z` | `X.Y.Z`, `X.Y`, `latest` | `1.0.0`, `1.0`, `latest` |
+
+- `X.Y.Z` is immutable: it always means the same release.
+- `X.Y` moves to the newest patch of that minor version, so `1.0` picks up a
+  future `1.0.1` without the user changing anything.
+- `latest` moves only on release tags, so it always points at the newest
+  release and never at an untagged `main` build. Pre-release tags such as
+  `v1.1.0-rc1` do not move it.
+- `sha-<commit>` ties any `main` image back to the exact commit it was built
+  from. Release images skip it; the git tag already names the commit.
+
+The git tag is the single source of the version. A tag run first checks that
+the `<version>` in `pom.xml` equals the tag without its `v`, and fails before
+the tests and the image push if they differ. Cutting a release is:
+
+```bash
+# set <version>X.Y.Z</version> in pom.xml, commit, push, wait for green on main
+git tag -a vX.Y.Z -m "vX.Y.Z"
+git push origin vX.Y.Z
+gh release create vX.Y.Z --generate-notes
+```
+
+Releases published so far:
+
+- [v1.0.0](https://github.com/DAMI333N/taskflow-api/releases/tag/v1.0.0): first
+  versioned release: the Module 3 API, the Dockerfile and the CI pipeline.
+- [v1.1.0](https://github.com/DAMI333N/taskflow-api/releases/tag/v1.1.0):
+  security scans in CI (Gitleaks, OWASP Dependency-Check, Trivy) gating the
+  publish job, and patched Tomcat and Jackson versions.
+
+![Docker Hub tags for dami333n/taskflow-api](screenshots/dockerhub-tags.png)
 
