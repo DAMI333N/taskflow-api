@@ -65,7 +65,7 @@ jobs:
           NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
         # The NVD API was too slow to finish within the job limit, so read the
         # Dependency-Check project's NVD data feed mirror instead.
-        run: ./mvnw -B org.owasp:dependency-check-maven:13.0.0:check -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/
+        run: ./mvnw -B org.owasp:dependency-check-maven:13.0.0:check -DnvdDatafeedUrl=https://dependency-check.github.io/DependencyCheck_Builder/nvd_cache/ -DsuppressionFile=dependency-check-suppressions.xml -DfailBuildOnCVSS=7
 
       - if: '!cancelled() && steps.nvd-cache.outputs.cache-hit != ''true'''
         uses: actions/cache/save@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
