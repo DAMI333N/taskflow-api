@@ -1,0 +1,3 @@
+# brotli-libs comes from the eclipse-temurin:21-jre-alpine base image (pushed 2026-10-22, before the fix).
+# The JVM app does not call native brotli. Remove once the base image ships brotli-libs 1.2.1-r0.
+CVE-2026-111497 exp:2026-11-15
