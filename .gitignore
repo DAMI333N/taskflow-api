@@ -36,3 +36,6 @@ build/
 Assignment_description.docx
 *.log
 /logs/
+
+### Secrets ###
+.env*
