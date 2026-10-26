@@ -28,7 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
-		<spring-ai.version>2.0.1</spring-ai.version>
+		<spring-ai.version>2.0.2</spring-ai.version>
 		<!-- Security override for the CVEs in README.md, Option 5; remove once Spring Boot manages >= this version. -->
 		<tomcat.version>11.0.27</tomcat.version>
 		<!-- Security override for the CVEs in README.md, Option 5; remove once Spring Boot manages >= this version. -->
