@@ -35,6 +35,8 @@
 		<jackson-bom.version>3.1.8</jackson-bom.version>
 		<!-- Security override for CVE list in BUILD-LOG.md; remove once Spring Boot manages >= this version. -->
 		<jackson-2-bom.version>2.21.8</jackson-2-bom.version>
+		<!-- Empty default so @{argLine} below resolves when no other plugin (such as JaCoCo) sets it. -->
+		<argLine></argLine>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -116,6 +118,26 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- Load Mockito as a Java agent at JVM start instead of self-attaching at test time,
+				 which JDK 21 warns about (JEP 451). Mockito docs, section 0.3. -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-dependency-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>properties</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar}</argLine>
+				</configuration>
 			</plugin>
 			<plugin>
 				<groupId>org.owasp</groupId>
