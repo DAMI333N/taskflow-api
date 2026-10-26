@@ -29,11 +29,11 @@
 	<properties>
 		<java.version>21</java.version>
 		<spring-ai.version>2.0.1</spring-ai.version>
-		<!-- Security override for CVE list in BUILD-LOG.md; remove once Spring Boot manages >= this version. -->
+		<!-- Security override for the CVEs in README.md, Option 5; remove once Spring Boot manages >= this version. -->
 		<tomcat.version>11.0.27</tomcat.version>
-		<!-- Security override for CVE list in BUILD-LOG.md; remove once Spring Boot manages >= this version. -->
+		<!-- Security override for the CVEs in README.md, Option 5; remove once Spring Boot manages >= this version. -->
 		<jackson-bom.version>3.1.8</jackson-bom.version>
-		<!-- Security override for CVE list in BUILD-LOG.md; remove once Spring Boot manages >= this version. -->
+		<!-- Security override for the CVEs in README.md, Option 5; remove once Spring Boot manages >= this version. -->
 		<jackson-2-bom.version>2.21.8</jackson-2-bom.version>
 		<!-- Empty default so @{argLine} below resolves when no other plugin (such as JaCoCo) sets it. -->
 		<argLine></argLine>
