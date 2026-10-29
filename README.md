@@ -4,7 +4,7 @@ A Spring Boot REST API for managing tasks, packaged as a Docker image, tested
 and scanned in CI, published to Docker Hub and deployed as a live web service
 with a React frontend on Netlify.
 
-Built for NTU AI Engineering. Module 3 produced the API; Module 4 (this
+Built for NTU AI Engineering Course. Module 3 produced the API; Module 4 (this
 submission) containerises and deploys it.
 
 ## Module 4 submission
